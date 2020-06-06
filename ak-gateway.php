@@ -132,7 +132,7 @@ function ak_init()
 						'md5' => __('MD5'),
 						'sha25' => __('NO')
 					),
-					'default' => 'md5'),
+					'default' => 'md5',
 				),
 				
                 'description' => array(
