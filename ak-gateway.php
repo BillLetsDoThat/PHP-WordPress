@@ -45,7 +45,7 @@ function ak_init()
 			$this->useSign = $this->get_option('useSign');
             $this->paymenttime = $this->get_option('paymenttime');
             $this->payment_method = $this->get_option('payment_method');
-			
+
 			include 'AliKassa.class.php';
 			$aliAPI = new \AliKassa($this->merchant_uuid, $this->secret, $method->hashAlgo);
 
@@ -121,11 +121,12 @@ function ak_init()
                     'default' => __('Аликасса', 'alikassa'),
                     'desc_tip' => true,
                 ),
+				
 				'hashAlgo' => array(
 					'title' => __('Алгоритм шифрования', 'alikassa'),
 					'type' => 'select',
-                    'description' => __('Выберите алгоритм формирования подписи', 'alikassa'),
-                    'default' => __('Аликасса', 'alikassa'),
+					'description' => __('Выберите алгоритм формирования подписи', 'alikassa'),
+					'default' => __('Аликасса', 'alikassa'),
 					'required'    => true,
 					'options'     => array(
 						'md5' => __('MD5'),
@@ -133,6 +134,7 @@ function ak_init()
 					),
 					'default' => 'md5'),
 				),
+				
                 'description' => array(
                     'title' => __('Описание', 'alikassa'),
                     'type' => 'textarea',
@@ -193,8 +195,8 @@ function ak_init()
                 'urlSuccess' => str_replace('amp;', '', $this->get_return_url($order)),
                 'urlFail' => str_replace('amp;', '', $order->get_cancel_order_url()),
             ];
-			
-			
+
+
 			include 'AliKassa.class.php';
 			$aliAPI = new \AliKassa($this->merchant_uuid, $this->secret, $method->hashAlgo);
 
@@ -227,13 +229,13 @@ function ak_init()
                 if (!$order) {
                     return false;
                 }
-                
+
 
                 $key = $this->secret;
-				
+
 				include 'AliKassa.class.php';
 				$aliAPI = new \AliKassa($this->merchant_uuid, $this->secret, $method->hashAlgo);
-				
+
                 $ak_sign = $aliAPI->sign($ak_response, $key, $this->hashAlgo);
 
                 if ($ak_response['sign'] == $ak_sign && ($ak_response['merchantUuid'] == $this->merchant_uuid)) {
@@ -263,13 +265,13 @@ function ak_init()
             header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
             header("Content-type: text/plain");
             $request = $_POST;
-			
+
 			include 'AliKassa.class.php';
 			$aliAPI = new \AliKassa($this->merchant_uuid, $this->secret, $method->hashAlgo);
 
 
             $data = $aliAPI->sign($request, $this->secret, $this->hashAlgo);
-			
+
 			header("Content-type: plain/text");
             echo $data;
             exit;
